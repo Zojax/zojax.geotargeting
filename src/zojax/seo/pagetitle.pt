@@ -1,0 +1,8 @@
+<title>
+  <tal:block condition="not:view/notRoot" content="view/title"
+	     i18n:translate="" />
+  <tal:block condition="view/notRoot">
+    <tal:block content="view/title" i18n:translate="" /> - 
+    <tal:block content="string: ${view/portal_title}"/>
+  </tal:block>
+</title>

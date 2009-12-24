@@ -1,0 +1,8 @@
+<h2>Portal content</h2>
+
+<div tal:content="structure provider:portal.contents"></div>
+
+<div>
+  <h2>Search parameters</h2>
+  <tal:block content="structure view/@@pagelet/form.view" />
+</div>

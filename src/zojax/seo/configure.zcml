@@ -1,0 +1,108 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:i18n="http://namespaces.zope.org/i18n"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="zojax.seo">
+
+  <zojax:configlet
+     name="system.seo"
+     title="SEO"
+     schema=".interfaces.ISEO"
+     description="SEO tools for site."
+     permission="zojax.Configure">
+    <require
+       permission="zope.Public"
+       interface=".interfaces.ISEO" />
+  </zojax:configlet>
+
+  <zojax:reservedNames
+     for="zope.app.component.interfaces.ISite"
+     names="robots.txt sitemap.xml" />
+
+  <browser:page
+     name="robots.txt"
+     for="zope.app.component.interfaces.ISite"
+     class=".configlet.RobotsView"
+     permission="zope.Public" />
+
+  <browser:page
+     name="sitemap.xml"
+     for="zope.app.component.interfaces.ISite"
+     class=".configlet.SitemapView"
+     permission="zope.Public" />
+
+  <!-- configlet views -->
+  <zojax:pagelet
+     name="index.html"
+     for=".interfaces.ISEO"
+     class="zojax.controlpanel.browser.wizard.ConfigletEditWizard"
+     permission="zojax.Configure" />
+
+  <zojax:pagelet
+     name="content"
+     title="Portal content"
+     type="wizard.step"
+     for=".interfaces.ISEO
+	  zojax.controlpanel.browser.interfaces.IConfigletEditWizard"
+     template="content.pt"
+     class=".content.PortalContent"
+     permission="zojax.Configure"
+     weight="999" />
+
+  <adapter
+     name="portal.contents"
+     provides="zope.contentprovider.interfaces.IContentProvider"
+     factory=".content.PortalContentsTable" />
+
+  <adapter
+     name="title"
+     factory=".content.TitleColumn" />
+
+  <adapter
+     name="titletag"
+     factory=".content.TitleTagColumn" />
+
+  <zojax:pagelet
+     name="view.html"
+     for=".content.PortalContent"
+     template="contentview.pt"
+     class=".content.ContentView"
+     permission="zojax.Configure" />
+
+  <!-- html tags for content -->
+  <zojax:extension
+     name="seo.tags"
+     title="SEO html tags"
+     description="This extension allow change content html head tags."
+     for="zojax.content.type.interfaces.IPortalType"
+     schema=".interfaces.IHTMLTags"
+     class=".htmltags.HTMLTags"
+     type="zojax.extensions.interfaces.IPageExtension"
+     permission="zojax.ModifyContent" />
+
+  <!-- edit content step -->
+  <zojax:pagelet
+     name="seo"
+     title="SEO tags"
+     type="wizard.step"
+     for="zojax.content.type.interfaces.IPortalType
+	  zojax.content.forms.interfaces.IEditContentWizard"
+     class=".htmltags.HTMLTagsEditForm"
+     permission="zojax.ModifyContent"
+     weight="999999" />
+
+  <zojax:pageelement
+     name="page.title"
+     template="pagetitle.pt"
+     class=".htmltags.PageTitle" />
+
+  <zojax:pageelement
+     name="page.metatags"
+     template="pagemeta.pt"
+     class=".htmltags.PageMeta" />
+
+  <!-- translations -->
+  <i18n:registerTranslations directory="locales"/>
+
+</configure>
