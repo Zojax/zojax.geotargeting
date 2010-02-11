@@ -1,0 +1,36 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:i18n="http://namespaces.zope.org/i18n"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="zojax.geotargeting">
+
+  <zojax:product
+    name="geotargeting"
+    title="Geotargeting"
+    description="Select content by geotarging"
+    schema=".interfaces.IGeotargetingProduct"
+    class=".product.GeotargetingProduct"
+    configurable="false" />
+
+  <registerIn registry="zojax.product.geotargeting">
+
+    <!-- geotargeting for content -->
+    <zojax:extension
+       name="geotargeting"
+       title="Geotargeting"
+       description="This extension allow change content geotargeting."
+       for="zojax.content.type.interfaces.IPortalType"
+       schema=".interfaces.IGeotargeting"
+       class=".geotargeting.Geotargeting"
+       type="zojax.extensions.interfaces.IPageExtension"
+       permission="zojax.ModifyContent" />
+    
+    <include package=".browser" />
+    
+  </registerIn>
+
+  <!-- translations -->
+  <i18n:registerTranslations directory="locales"/>
+
+</configure>

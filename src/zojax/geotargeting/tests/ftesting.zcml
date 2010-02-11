@@ -8,16 +8,16 @@
   <!-- used for functional testing setup -->
 
   <include package="zojax.autoinclude" file="meta.zcml" />
-  <includeAllDependencies package="zojax.seo" extras="test" />
+  <includeAllDependencies package="zojax.geotargeting" extras="test" />
 
-  <includeOverrides package="zojax.seo.tests" file="overrides.zcml" />
+  <includeOverrides package="zojax.geotargeting.tests" file="overrides.zcml" />
 
   <securityPolicy
      component="zope.securitypolicy.zopepolicy.ZopeSecurityPolicy" />
 
   <interface
      name="DefaultSkin"
-     interface="zojax.seo.tests.tests.IDefaultSkin"
+     interface="zojax.geotargeting.tests.tests.IDefaultSkin"
      type="zope.publisher.interfaces.browser.IBrowserSkinType" />
 
   <browser:defaultSkin name="DefaultSkin" />
@@ -32,10 +32,10 @@
   <zojax:content
      name="content1"
      title="Content 1"
-     schema="zojax.seo.tests.tests.IContent"
-     class="zojax.seo.tests.tests.Content" />
+     schema="zojax.geotargeting.tests.tests.IContent"
+     class="zojax.geotargeting.tests.tests.Content" />
 
-  <class class="zojax.seo.tests.tests.Content">
+  <class class="zojax.geotargeting.tests.tests.Content">
     <implements interface="zojax.content.type.interfaces.ISearchableContent" />
     <require
        permission="zope.View"
@@ -46,11 +46,11 @@
   <zojax:content
      name="content2"
      title="Content 2"
-     schema="zojax.seo.tests.tests.IPortalContent"
-     class="zojax.seo.tests.tests.PortalContent"
+     schema="zojax.geotargeting.tests.tests.IPortalContent"
+     class="zojax.geotargeting.tests.tests.PortalContent"
      type="zojax.content.type.interfaces.IPortalType" />
 
-  <class class="zojax.seo.tests.tests.PortalContent">
+  <class class="zojax.geotargeting.tests.tests.PortalContent">
     <implements interface="zojax.content.type.interfaces.ISearchableContent" />
     <require
        permission="zope.View"

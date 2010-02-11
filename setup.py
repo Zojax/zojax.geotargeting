@@ -11,7 +11,7 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-"""Setup for zojax.seo package
+"""Setup for zojax.geotargeting package
 
 $Id$
 """
@@ -24,7 +24,7 @@ def read(*rnames):
 version='1.2.2dev'
 
 
-setup(name = 'zojax.seo',
+setup(name = 'zojax.geotargeting',
       version = version,
       author = 'Anatoly Bubenkov',
       author_email = 'bubenkoff@gmail.com',

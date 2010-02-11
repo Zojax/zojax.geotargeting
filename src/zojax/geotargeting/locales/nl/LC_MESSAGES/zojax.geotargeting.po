@@ -23,29 +23,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: zope/app/locales/extract.py\n"
 
-#: src/zojax/seo/configure.zcml:10
+#: src/zojax/geotargeting/configure.zcml:10
 msgid "SEO"
 msgstr ""
 
-#: src/zojax/seo/configure.zcml:10
+#: src/zojax/geotargeting/configure.zcml:10
 msgid "SEO tools for site."
 msgstr ""
 
-#: src/zojax/seo/interfaces.py:28
+#: src/zojax/geotargeting/interfaces.py:28
 msgid "Enabled"
 msgstr "Ingeschakeld"
 
-#: src/zojax/seo/interfaces.py:29
+#: src/zojax/geotargeting/interfaces.py:29
 #, fuzzy
 msgid "Enable SEO for this site."
 msgstr "Schakel Google Analytics in voor deze site."
 
-#: src/zojax/seo/interfaces.py:34 src/zojax/seo/interfaces.py:35
-#: src/zojax/seo/interfaces.py:43
+#: src/zojax/geotargeting/interfaces.py:34 src/zojax/geotargeting/interfaces.py:35
+#: src/zojax/geotargeting/interfaces.py:43
 msgid "Robots"
 msgstr ""
 
-#: src/zojax/seo/interfaces.py:42
+#: src/zojax/geotargeting/interfaces.py:42
 msgid "Sitemap"
 msgstr ""
 

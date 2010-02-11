@@ -1,7 +1,0 @@
-<meta name="description" tal:condition="view/description" 
-      tal:attributes="content view/description" />
-<meta name="keywords" tal:condition="view/keywords"
-      tal:attributes="content view/keywords" />
-
-<tal:block tal:repeat="element view/elements"
-	   tal:content="structure element/render" />

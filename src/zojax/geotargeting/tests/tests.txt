@@ -56,7 +56,7 @@ Browser site
     >>> anon.headers['Content-Type']
     'text/xml;charset=utf-8'
 
-When we have disabled seo configlet, we have NotFound for all pages
+When we have disabled geotargeting configlet, we have NotFound for all pages
 
     >>> admin.getControl(name="configlet.widgets.enabled:list").value = ['false']
     >>> admin.getControl(name='configlet.buttons.save').click()
@@ -96,12 +96,12 @@ HTML Tags
     >>> from zope.lifecycleevent import ObjectModifiedEvent
     >>> from zope.annotation.interfaces import IAttributeAnnotatable
     >>> from zojax.content.type.interfaces import IContent, IContentType
-    >>> from zojax.seo.interfaces import IHTMLTags
-    >>> from zojax.seo.tests.tests import Content, PortalContent
+    >>> from zojax.geotargeting.interfaces import IHTMLTags
+    >>> from zojax.geotargeting.tests.tests import Content, PortalContent
 
     >>> interface.alsoProvides(root, IContent, IAttributeAnnotatable)
 
-Test seo tags for content that doesn't support seo.tags extension
+Test geotargeting tags for content that doesn't support geotargeting.tags extension
 
     >>> root['content'] = Content(title=u'Simple content')
 
@@ -126,7 +126,7 @@ Test seo tags for content that doesn't support seo.tags extension
     ...
     LinkNotFoundError
 
-Test seo tags for content that supports seo.tags extension
+Test geotargeting tags for content that supports geotargeting.tags extension
 
     >>> root['pcontent'] = PortalContent(title=u'Portal content')
 
@@ -141,7 +141,7 @@ Test seo tags for content that supports seo.tags extension
       ...
     </html>
 
-    >>> admin.open("http://localhost/pcontent/context.html/seo/")
+    >>> admin.open("http://localhost/pcontent/context.html/geotargeting/")
     >>> admin.getControl('Title').value = u'Content title'
     >>> admin.getControl('Description').value = u'Content description'
     >>> admin.getControl('Keywords').value = u'Content keywords'
@@ -158,7 +158,7 @@ Test seo tags for content that supports seo.tags extension
     ...
     </html>
 
-Check seo tags for portal object
+Check geotargeting tags for portal object
 
     >>> admin.open("http://localhost/test.html")
     >>> print admin.contents
@@ -171,7 +171,7 @@ Check seo tags for portal object
     ...
     </html>
 
-    >>> admin.open("http://localhost/context.html/seo/")
+    >>> admin.open("http://localhost/context.html/geotargeting/")
     >>> admin.getControl('Title').value = u'Default portal title'
     >>> admin.getControl('Description').value = u'Default portal description'
     >>> admin.getControl('Keywords').value = u'Default portal keywords'
