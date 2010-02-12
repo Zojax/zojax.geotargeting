@@ -21,14 +21,14 @@ from setuptools import setup, find_packages
 def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
-version='1.2.2dev'
+version='0'
 
 
 setup(name = 'zojax.geotargeting',
       version = version,
       author = 'Anatoly Bubenkov',
       author_email = 'bubenkoff@gmail.com',
-      description = "SEO for zojax",
+      description = "Geotargeting for zojax",
       long_description = (
         'Detailed Documentation\n' +
         '======================\n'
@@ -56,17 +56,16 @@ setup(name = 'zojax.geotargeting',
                           'zope.schema',
                           'zope.i18n',
                           'zope.i18nmessageid',
-                          'zope.app.intid',
-                          'zope.app.keyreference',
-                          'z3c.breadcrumb',
+                          'z3c.multifieldindex',
                           'zojax.extensions',
-                          'zojax.controlpanel',
+                          'zojax.product',
+                          'zojax.catalog',
+                          'zojax.layoutform',
                           'zojax.content.type',
                           'zojax.content.forms',
-                          'zojax.content.table',
-                          'zojax.pageelement',
-                          'zojax.wizard',
-                          'zojax.catalog',
+                          'zojax.persistent.fields',
+                          'zojax.principal.profile',
+                          'zojax.principal.users',
                           ],
       extras_require = dict(test=['zope.app.testing',
                                   'zope.testing',

@@ -11,31 +11,21 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
-""" geotargeting configlet interfaces
+"""
 
 $Id$
 """
-from zope import schema, interface
-from zope.i18nmessageid import MessageFactory
+from zojax.layoutform import button, Fields
+from zojax.layoutform import PageletEditForm, PageletEditSubForm
 
-_ = MessageFactory('zojax.geotargeting')
-
-
-class IGeotargetingProduct(interface.Interface):
-    """ product interface """
+from zojax.geotargeting.interfaces import _, IGeotargetingPreference
 
 
-class IGeotargeting(interface.Interface):
-    """ geotargeting """
+class Geotargeting(PageletEditSubForm):
 
-    zipCode = schema.TextLine(
-        title = _('Zip code'),
-        description = _('Zip code.'),
-        default = u'',
-        required = False)
+    fields = Fields(IGeotargetingPreference)
     
+    label = _(u'Geotargeting')
     
-class IGeotargetingPreference(IGeotargeting):
-    """ geotargeting preference """
-    
-    
+    def getContent(self):
+        return IGeotargetingPreference(self.context.__principal__)

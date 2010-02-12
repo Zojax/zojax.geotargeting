@@ -8,7 +8,7 @@
   <zojax:product
     name="geotargeting"
     title="Geotargeting"
-    description="Select content by geotarging"
+    description="Select content by geotargeting"
     schema=".interfaces.IGeotargetingProduct"
     class=".product.GeotargetingProduct"
     configurable="false" />
@@ -25,6 +25,10 @@
        class=".geotargeting.Geotargeting"
        type="zojax.extensions.interfaces.IPageExtension"
        permission="zojax.ModifyContent" />
+    
+    <include file="indexes.zcml" />
+    
+    <include file="preference.zcml" />
     
     <include package=".browser" />
     

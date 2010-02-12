@@ -16,27 +16,21 @@
 $Id$
 """
 from zope import interface, component
-from zojax.layoutform import Fields, PageletEditSubForm
+from zope.app.component.interfaces import ISite
+from zope.annotation.interfaces import IAnnotations
+from zojax.content.type.interfaces import IContentType, IPortalType
 
-from zojax.geotargeting.interfaces import _, IGeotargeting
+from interfaces import _, IGeotargeting
 
 
-class GeotargetingEditForm(PageletEditSubForm):
-
-    label = _(u'Geotargeting')
-    fields = Fields(IGeotargeting)
-
-    def update(self):
-        self.content = self.context
-
-        extension = IGeotargeting(self.content, None)
-        if extension is not None and extension.isAvailable():
-            self.context = extension
-            super(GeotargetingEditForm, self).update()
-        else:
-            self.context = None
+class Geotargeting(object):
+    interface.implements(IGeotargeting)
 
     def isAvailable(self):
-        if super(GeotargetingEditForm, self).isAvailable():
-            return self.context is not None
+        context = self.context
+
+        if IPortalType.providedBy(context) or ISite.providedBy(context):
+            annotation = IAnnotations(context, None)
+            if annotation is not None:
+                return True
         return False

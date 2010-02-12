@@ -1,0 +1,14 @@
+<configure xmlns="http://namespaces.zope.org/zope">
+
+  <utility
+      name="geotargeting"
+      component=".indexes.geotargeting"
+      provides="zojax.catalog.interfaces.ICatalogIndexFactory"
+      />
+      
+  <utility
+      name="geotargeting"
+      factory=".indexes.GeotargetingQueryPlugin"
+      />
+
+</configure>

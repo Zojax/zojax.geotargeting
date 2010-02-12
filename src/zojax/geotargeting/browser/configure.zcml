@@ -9,9 +9,17 @@
   <zojax:pagelet
      name="geotargeting"
      type="form.subform"
-     for="zojax.content.featured.interfaces.IContentFeaturable
+     for="zojax.content.type.interfaces.IPortalType
           zojax.content.forms.interfaces.IContentStep"
      class=".geotargeting.GeotargetingEditForm"
      weight="999999" />
+
+  <zojax:pagelet
+     name="geotargeting"
+     type="form.subform"
+     for="zojax.principal.profile.interfaces.IPersonalProfile
+          zojax.principal.profile.browser.preference.PersonalProfile"
+     class=".preference.Geotargeting"
+     weight="20" />
 
 </configure>

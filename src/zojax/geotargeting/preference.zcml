@@ -1,0 +1,23 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:zojax="http://namespaces.zope.org/zojax"
+    i18n_domain="zojax.jobboard"
+    >
+
+  <zojax:preferenceGroup
+     id="geotargeting"
+     title="Geotargeting"
+     description="The preferences related to user geotargeting."
+     schema=".interfaces.IGeotargetingPreference"
+     class=".preference.GeotargetingPreference"
+     accesspermission="zope.Public"
+     >
+     <require
+       permission="zojax.ModifyPreference"
+       attributes="touch"
+       />
+  </zojax:preferenceGroup>
+     
+  <subscriber handler=".preference.preferenceModified" />
+
+</configure>
