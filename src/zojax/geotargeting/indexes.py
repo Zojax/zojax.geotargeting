@@ -63,7 +63,7 @@ class GeotargetingQueryPlugin(object):
     def __call__(self):
         preference = IGeotargetingPreference(getPrincipal(), None)
         if preference is not None \
-            and preference.zipCode is not None \
-            and preference.zipCode:
-            return {'geotargeting': {'zipCode': preference.zipCode}}
+            and preference.location is not None \
+            and preference.location:
+            return {'geotargeting': {'location': preference.location}}
         return {}

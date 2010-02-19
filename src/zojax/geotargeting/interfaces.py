@@ -18,6 +18,8 @@ $Id$
 from zope import schema, interface
 from zope.i18nmessageid import MessageFactory
 
+from zojax.widget.googlemap.field import MapLocation
+
 _ = MessageFactory('zojax.geotargeting')
 
 
@@ -28,14 +30,16 @@ class IGeotargetingProduct(interface.Interface):
 class IGeotargeting(interface.Interface):
     """ geotargeting """
 
-    zipCode = schema.TextLine(
-        title = _('Zip code'),
-        description = _('Zip code.'),
-        default = u'',
+    location = MapLocation(
+        title = _('Location'),
+        description = _('Your location.'),
         required = False)
     
     
 class IGeotargetingPreference(IGeotargeting):
     """ geotargeting preference """
     
-    
+    location = MapLocation(
+        title = _('Location'),
+        description = _('Your location.'),
+        required = True)
