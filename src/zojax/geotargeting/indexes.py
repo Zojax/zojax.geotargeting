@@ -12,6 +12,7 @@
 #
 ##############################################################################
 from zojax.principal.profile.interfaces import IPersonalProfile
+from zojax.geotargeting.interfaces import IGeotargetingProduct
 """Indexes for Job Profiles
 
 $Id$
@@ -50,8 +51,11 @@ class GeotargetingIndex(AttributeIndex, MultiFieldIndexBase):
         return getFieldsInOrder(IGeotargeting)
 
     def _getData(self, object):
-        return dict(map(lambda (name, field): (name, getattr(object, name)),
+        res = dict(map(lambda (name, field): (name, getattr(object, name)),
                         self._fields()))
+        if res.get('location') is not None:
+            res['location'] = res['location'].geocode
+        return res
         
 
 class GeotargetingQueryPlugin(object):
@@ -62,8 +66,13 @@ class GeotargetingQueryPlugin(object):
     
     def __call__(self):
         preference = IGeotargetingPreference(getPrincipal(), None)
-        if preference is not None \
+        if preference is not None and preference.enabled \
             and preference.location is not None \
-            and preference.location:
-            return {'geotargeting': {'location': preference.location}}
+            and preference.location \
+            and preference.location.geocode is not None \
+            and preference.location.geocode:
+            return {'geotargeting': {'location': {'any_of': (preference.location.geocode,)}}}
         return {}
+    
+    def isAvailable(self):
+        return getUtility(IGeotargetingProduct).applyOnEachQuery

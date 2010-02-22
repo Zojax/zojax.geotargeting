@@ -25,6 +25,11 @@ _ = MessageFactory('zojax.geotargeting')
 
 class IGeotargetingProduct(interface.Interface):
     """ product interface """
+    
+    applyOnEachQuery = schema.Bool(
+        title = _('Apply geotargeting on each catalog query'),
+        required = True,
+        default = False)
 
 
 class IGeotargeting(interface.Interface):
@@ -38,6 +43,11 @@ class IGeotargeting(interface.Interface):
     
 class IGeotargetingPreference(IGeotargeting):
     """ geotargeting preference """
+    
+    enabled = schema.Bool(
+        title = _('Enable geotargeting'),
+        required = True,
+        default = True)
     
     location = MapLocation(
         title = _('Location'),
