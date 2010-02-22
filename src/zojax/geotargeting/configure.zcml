@@ -10,7 +10,8 @@
     title="Geotargeting"
     description="Select content by geotargeting"
     schema=".interfaces.IGeotargetingProduct"
-    class=".product.GeotargetingProduct" />
+    class=".product.GeotargetingProduct"
+    configurable="true" />
 
   <registerIn registry="zojax.product.geotargeting">
 
