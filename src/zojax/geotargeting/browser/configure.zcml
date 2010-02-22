@@ -20,6 +20,14 @@
      for="zojax.principal.profile.interfaces.IPersonalProfile
           zojax.principal.profile.browser.preference.PersonalProfile"
      class=".preference.Geotargeting"
-     weight="20" />
+     weight="2" />
+     
+  <zojax:pagelet
+     name="geotargeting"
+     type="form.subform"
+     for="zope.interface.Interface
+          zojax.principal.registration.interfaces.IMemberRegistrationForm"
+     class=".registration.Geotargeting"
+     weight="2" />
 
 </configure>
