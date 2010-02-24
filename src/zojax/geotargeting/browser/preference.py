@@ -27,5 +27,7 @@ class Geotargeting(PageletEditSubForm):
     
     label = _(u'Geotargeting')
     
+    prefix="geotargeting."
+    
     def getContent(self):
         return IGeotargetingPreference(self.context.__principal__)

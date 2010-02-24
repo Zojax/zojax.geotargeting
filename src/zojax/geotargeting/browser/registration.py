@@ -32,6 +32,8 @@ class Geotargeting(PageletEditSubForm):
     
     label = _(u'Geotargeting')
     
+    prefix="geotargeting."
+    
     def getContent(self):
         preference = IGeotargetingPreference(self.parentForm.registeredPrincipal, None)
         if preference is not None:
