@@ -37,7 +37,7 @@ class IGeotargeting(interface.Interface):
 
     location = MapLocation(
         title = _('Location'),
-        description = _('Your location.'),
+        description = _('Geolocation.'),
         required = False)
     
     
