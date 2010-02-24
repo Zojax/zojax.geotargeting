@@ -28,7 +28,7 @@ from zojax.geotargeting.interfaces import _, IGeotargetingPreference
 
 class Geotargeting(PageletEditSubForm):
 
-    fields = Fields(IGeotargetingPreference)
+    fields = Fields(IGeotargetingPreference).omit('enabled')
     
     label = _(u'Geotargeting')
     
