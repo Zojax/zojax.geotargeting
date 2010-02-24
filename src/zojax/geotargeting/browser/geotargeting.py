@@ -25,6 +25,7 @@ class GeotargetingEditForm(PageletEditSubForm):
 
     label = _(u'Geotargeting')
     fields = Fields(IGeotargeting)
+    prefix="geotargeting."
 
     def update(self):
         self.content = self.context
