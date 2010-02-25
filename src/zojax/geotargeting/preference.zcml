@@ -19,5 +19,10 @@
   </zojax:preferenceGroup>
      
   <subscriber handler=".preference.preferenceModified" />
+  
+  <!-- profile checker -->
+  <adapter
+     name="zojax.geotargeting-geotargetingCompleteChecker"
+     factory=".profilechecker.GeotargetingChecker" />
 
 </configure>
