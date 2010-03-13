@@ -13,6 +13,15 @@
           zojax.content.forms.interfaces.IContentStep"
      class=".geotargeting.GeotargetingEditForm"
      weight="999999" />
+     
+  <!-- add content wizard -->
+  <zojax:pagelet
+     name="geotargeting"
+     type="form.subform"
+     for="zojax.content.type.interfaces.IPortalType
+          zojax.content.forms.form.AddForm"
+     class=".geotargeting.GeotargetingAddForm"
+     weight="999999" />
 
   <zojax:pagelet
      name="geotargeting"

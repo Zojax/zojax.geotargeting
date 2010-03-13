@@ -16,28 +16,57 @@
 $Id$
 """
 from zope import interface, component
-from zojax.layoutform import Fields, PageletEditSubForm
+from zojax.layoutform import Fields, PageletEditSubForm, PageletAddSubForm
+from zojax.layoutform.utils import applyChanges
 
 from zojax.geotargeting.interfaces import _, IGeotargeting
 
 
-class GeotargetingEditForm(PageletEditSubForm):
+class GeotargetingBaseForm(object):
 
     label = _(u'Geotargeting')
     fields = Fields(IGeotargeting)
     prefix="geotargeting."
 
+
+class GeotargetingEditForm(GeotargetingBaseForm, PageletEditSubForm):
+    
     def update(self):
         self.content = self.context
 
         extension = IGeotargeting(self.content, None)
         if extension is not None and extension.isAvailable():
             self.context = extension
-            super(GeotargetingEditForm, self).update()
+            super(GeotargetingBaseForm, self).update()
         else:
             self.context = None
 
     def isAvailable(self):
-        if super(GeotargetingEditForm, self).isAvailable():
+        if super(GeotargetingBaseForm, self).isAvailable():
             return self.context is not None
         return False
+    
+    
+class GeotargetingAddForm(GeotargetingBaseForm, PageletAddSubForm):
+    
+    extension = None
+    
+    def getContent(self):
+        return {}
+
+    def update(self):
+        extension = IGeotargeting(self.context, None)
+
+        if extension is not None:
+            self.extension = extension
+            super(GeotargetingAddForm, self).update()
+
+    def isAvailable(self):
+        return self.extension is not None
+
+    def applyChanges(self, data):
+        extension = IGeotargeting(self.parentForm._addedObject, None)
+        if extension is not None and extension.isAvailable():
+            return applyChanges(self, extension, data)
+        else:
+            return {}
