@@ -15,9 +15,15 @@
 
 $Id$
 """
-from zope import interface, component
+from zope import interface, event, component
+from zope.component import queryMultiAdapter
+from zope.traversing.browser import absoluteURL
+from zope.lifecycleevent import Attributes, ObjectModifiedEvent
+from z3c.form import subform, button
+
 from zojax.layoutform import Fields, PageletEditSubForm, PageletAddSubForm
 from zojax.layoutform.utils import applyChanges
+from zojax.layoutform.interfaces import ISaveAction
 
 from zojax.geotargeting.interfaces import _, IGeotargeting
 
@@ -45,6 +51,21 @@ class GeotargetingEditForm(GeotargetingBaseForm, PageletEditSubForm):
         if super(GeotargetingBaseForm, self).isAvailable():
             return self.context is not None
         return False
+    
+    @button.handler(ISaveAction)
+    def handleApply(self, action):
+        data, errors = self.extractData()
+
+        if not errors:
+            changes = self.applyChanges(data)
+            if changes:
+                descriptions = []
+                for interface, names in changes.items():
+                    descriptions.append(Attributes(interface, *names))
+
+                self.changesApplied = True
+                event.notify(
+                    ObjectModifiedEvent(self.content, *descriptions))
     
     
 class GeotargetingAddForm(GeotargetingBaseForm, PageletAddSubForm):
