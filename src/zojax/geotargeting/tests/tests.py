@@ -15,52 +15,73 @@
 
 $Id$
 """
-import os.path
-import unittest, doctest
-from zope import interface
-from zope.app.testing import setup
-from zope.app.testing.functional import ZCMLLayer
-from zope.annotation.interfaces import IAttributeAnnotatable
-from zope.app.container.interfaces import IContainer as IBaseContainer
-from zope.app.rotterdam import Rotterdam
-from zope.app.container.sample import SampleContainer
+import unittest, os.path
 from zojax.layoutform.interfaces import ILayoutFormLayer
-from zojax.content.type.item import PersistentItem
-from zojax.content.type.interfaces import IItem
+from zope.app.rotterdam import Rotterdam
+from zope.testing import doctest
+import zope.app.testing.functional
+
+import zope.app.testing.functional
+
+
+ZCMLLayer = zope.app.testing.functional.ZCMLLayer
+FunctionalTestSetup = zope.app.testing.functional.FunctionalTestSetup
+
 
 class IDefaultSkin(ILayoutFormLayer, Rotterdam):
     """ skin """
 
-class IPortal(interface.Interface):
-    """ portal """
-
-class IContent(IItem):
-    """ content """
-
-class IContentType(interface.Interface):
-    """ content type """
-
-class IPortalContent(IItem):
-    """ simple content """
-
-class IContainer(IBaseContainer):
-    """ container """
-
-class Content(PersistentItem):
-    interface.implements(IContent)
-
-class PortalContent(PersistentItem):
-    interface.implements(IPortalContent, IAttributeAnnotatable)
-
-geotargeting = ZCMLLayer(
+zojaxGeotargetingLayer = ZCMLLayer(
     os.path.join(os.path.split(__file__)[0], 'ftesting.zcml'),
-    __name__, 'geotargeting', allow_teardown=True)
+    __name__, 'zojaxGeotargetingLayer', allow_teardown=True)
+
+
+def FunctionalDocFileSuite(*paths, **kw):
+    if 'layer' in kw:
+        layer = kw['layer']
+        del kw['layer']
+    else:
+        layer = zope.app.testing.functional.Functional
+
+    globs = kw.setdefault('globs', {})
+    globs['http'] = zope.app.testing.functional.HTTPCaller()
+    globs['getRootFolder'] = zope.app.testing.functional.getRootFolder
+    globs['sync'] = zope.app.testing.functional.sync
+
+    kw['package'] = doctest._normalize_module(kw.get('package'))
+
+    kwsetUp = kw.get('setUp')
+
+    def setUp(test):
+        FunctionalTestSetup().setUp()
+
+        if kwsetUp is not None:
+            kwsetUp(test)
+
+    kw['setUp'] = setUp
+
+    kwtearDown = kw.get('tearDown')
+
+    def tearDown(test):
+        if kwtearDown is not None:
+            kwtearDown(test)
+        FunctionalTestSetup().tearDown()
+
+    kw['tearDown'] = tearDown
+
+    if 'optionflags' not in kw:
+        old = doctest.set_unittest_reportflags(0)
+        doctest.set_unittest_reportflags(old)
+        kw['optionflags'] = (old
+                             | doctest.ELLIPSIS
+                             | doctest.NORMALIZE_WHITESPACE)
+
+    suite = doctest.DocFileSuite(*paths, **kw)
+    suite.layer = layer
+    return suite
 
 
 def test_suite():
-    test = doctest.DocFileSuite(
-        "tests.txt",
-        optionflags=doctest.ELLIPSIS|doctest.NORMALIZE_WHITESPACE)
-    test.layer = geotargeting
-
-    return unittest.TestSuite((test,))
+    return unittest.TestSuite((
+        FunctionalDocFileSuite(
+            './tests.txt', layer=zojaxGeotargetingLayer),))

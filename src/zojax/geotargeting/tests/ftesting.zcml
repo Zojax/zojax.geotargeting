@@ -4,16 +4,9 @@
    xmlns:zojax="http://namespaces.zope.org/zojax"
    i18n_domain="zojax.geotargeting">
 
-  <!-- This file is the equivalent of site.zcml and it is -->
-  <!-- used for functional testing setup -->
-
+  <exclude package="zope.app.securitypolicy.browser" />
   <include package="zojax.autoinclude" file="meta.zcml" />
   <includeAllDependencies package="zojax.geotargeting" extras="test" />
-
-  <includeOverrides package="zojax.geotargeting.tests" file="overrides.zcml" />
-
-  <securityPolicy
-     component="zope.securitypolicy.zopepolicy.ZopeSecurityPolicy" />
 
   <interface
      name="DefaultSkin"
@@ -22,51 +15,9 @@
 
   <browser:defaultSkin name="DefaultSkin" />
 
-  <zojax:pagelet
-     name="test.html"
-     for="*"
-     template="test.pt"
-     permission="zope.Public" />
-
-  <!-- content types -->
-  <zojax:content
-     name="content1"
-     title="Content 1"
-     schema="zojax.geotargeting.tests.tests.IContent"
-     class="zojax.geotargeting.tests.tests.Content" />
-
-  <class class="zojax.geotargeting.tests.tests.Content">
-    <implements interface="zojax.content.type.interfaces.ISearchableContent" />
-    <require
-       permission="zope.View"
-       set_schema="zojax.content.type.interfaces.IItem"
-       interface="zojax.content.type.interfaces.IItem" />
-  </class>
-
-  <zojax:content
-     name="content2"
-     title="Content 2"
-     schema="zojax.geotargeting.tests.tests.IPortalContent"
-     class="zojax.geotargeting.tests.tests.PortalContent"
-     type="zojax.content.type.interfaces.IPortalType" />
-
-  <class class="zojax.geotargeting.tests.tests.PortalContent">
-    <implements interface="zojax.content.type.interfaces.ISearchableContent" />
-    <require
-       permission="zope.View"
-       set_schema="zojax.content.type.interfaces.IItem"
-       interface="zojax.content.type.interfaces.IItem" />
-  </class>
-
-  <!-- portal -->
-  <zojax:content
-     name="portal"
-     title="Portal"
-     schema="zope.app.folder.interfaces.IFolder"
-     class="zope.app.folder.folder.Folder"
-     type="zojax.content.type.interfaces.IPortalType" />
-
-  <!-- roles -->
+  <securityPolicy
+     component="zojax.security.securitypolicy.SecurityPolicy" />
+  
   <role id="zope.Anonymous" title="Everybody"
         description="All users have this role implicitly" />
   <role id="zope.Manager" title="Site Manager" />
